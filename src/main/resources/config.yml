@@ -1,0 +1,16 @@
+world:
+  height: 24
+  multi: 1
+  mobs:
+  - zombie
+  - creeper
+  - skeleton
+  - spider
+  - cave spider
+  - enderman
+  - endermite
+  - ocelot
+  - silverfish
+  - slime
+  - witch
+  - wolf
