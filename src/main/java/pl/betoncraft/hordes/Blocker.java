@@ -49,6 +49,7 @@ public class Blocker implements Listener {
 		if (event.getSpawnReason() != SpawnReason.NATURAL) return;
 		WorldSettings set = plugin.getWorlds().get(event.getEntity().getWorld()
 				.getName());
+		if (set == null) return;
 		LivingEntity e = event.getEntity();
 		if (!set.shouldExist(e)) {
 			event.setCancelled(true);
