@@ -2,7 +2,7 @@ name: Hordes
 main: pl.betoncraft.hordes.Hordes
 description: Increases amount of mobs near players while decreasing overall number of mobs.
 authors: [Co0sh]
-version: 1.0
+version: 1.0.2
 commands:
   hordesreload:
     description: Reloads the configuration

@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 
 /**
  * Contains all settings for the world.
@@ -65,7 +66,8 @@ public class WorldSettings {
 	
 	/**
 	 * Checks if the entity is withing range of the player or if it has custom
-	 * name. In other words, if it should be removed or left alone.
+	 * name or if it is tamed. In other words, if it should be removed or left
+	 * alone.
 	 * 
 	 * @param entity
 	 *            entity to check
@@ -74,6 +76,10 @@ public class WorldSettings {
 	public boolean shouldExist(Entity entity) {
 		if (entity.getCustomName() != null) return true;
 		if (!entities.contains(entity.getType())) return true;
+		if (entity instanceof Tameable) {
+			Tameable t = (Tameable) entity;
+			if (t.isTamed()) return true;
+		}
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (player.getGameMode() == GameMode.CREATIVE ||
 					player.getGameMode() == GameMode.SPECTATOR) continue; 
