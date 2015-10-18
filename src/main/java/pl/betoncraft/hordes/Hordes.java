@@ -38,6 +38,7 @@ public class Hordes extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		new Updater(this);
 		saveDefaultConfig();
 		load();
 		new ReloadCommand(this);

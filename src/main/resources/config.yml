@@ -1,6 +1,7 @@
 global-settings:
   async-despawn: true
   despawn-interval: 10
+  version: 1
 worlds:
   world:
     height: 24
