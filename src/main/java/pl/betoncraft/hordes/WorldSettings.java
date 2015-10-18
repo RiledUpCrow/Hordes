@@ -51,10 +51,10 @@ public class WorldSettings {
 	 */
 	public WorldSettings(Hordes plugin, String world) throws LoadingException {
 		this.world = world;
-		height = plugin.getConfig().getDouble(world + ".height", 24);
-		multiplier = plugin.getConfig().getDouble(world + ".multi", 1);
+		height = plugin.getConfig().getDouble("worlds." + world + ".height", 24);
+		multiplier = plugin.getConfig().getDouble("worlds." + world + ".multi", 1);
 		for (String entity : plugin.getConfig()
-				.getStringList(world + ".mobs")) {
+				.getStringList("worlds." + world + ".mobs")) {
 			try {
 				entities.add(EntityType.valueOf(
 						entity.toUpperCase().replace(' ', '_')));

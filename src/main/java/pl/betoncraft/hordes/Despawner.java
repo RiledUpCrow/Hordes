@@ -39,7 +39,14 @@ public class Despawner extends BukkitRunnable {
 	 */
 	public Despawner(Hordes plugin) {
 		this.plugin = plugin;
-		runTaskTimerAsynchronously(plugin, 10*20, 10*20);
+		int interval = plugin.getConfig().getInt(
+				"global-settings.despawn-interval", 10);
+		if (plugin.getConfig().getBoolean(
+				"global-settings.async-despawn", true)) {
+			runTaskTimerAsynchronously(plugin, interval*20, interval*20);
+		} else {
+			runTaskTimer(plugin, interval*20, interval*20);
+		}
 	}
 
 	@Override

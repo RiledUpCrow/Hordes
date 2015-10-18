@@ -1,16 +1,20 @@
-world:
-  height: 24
-  multi: 1
-  mobs:
-  - zombie
-  - creeper
-  - skeleton
-  - spider
-  - cave spider
-  - enderman
-  - endermite
-  - ocelot
-  - silverfish
-  - slime
-  - witch
-  - wolf
+global-settings:
+  async-despawn: true
+  despawn-interval: 10
+worlds:
+  world:
+    height: 24
+    multi: 1
+    mobs:
+    - zombie
+    - creeper
+    - skeleton
+    - spider
+    - cave spider
+    - enderman
+    - endermite
+    - ocelot
+    - silverfish
+    - slime
+    - witch
+    - wolf
