@@ -26,8 +26,15 @@ near the players.
 
 ## Configuration
 
-Each world in which you want to enable the plugin needs one section in the
-configuration, named as the name of the world. `height` option is responsible
+You can edit the plugin settings in the config.yml file. async-despawn option 
+in "global-settings" controls if the plugin should despawn mobs in an asych thread.
+Leave that set to "true" unless you have problems with other plugins. despawn-interval
+controls how often the mobs are despawned. Default is every 10 seconds. If you make 
+that number lower, the mobs will be removed more frequently, but it may slightly impact
+the performance. Last is version. Do not touch this setting!
+
+Each world in which you want to enable the plugin needs one section in the "worlds"
+branch in the configuration, named as the name of the world. `height` option is responsible
 for the vertical distance from the player beyond which monsters will despawn.
 If you want to limit horizontal distance, there's an option for that in
 _spigot.yml_ config file, it's called `mob-spawn-range`. Use ctrl+f to find
