@@ -54,7 +54,7 @@ public class Hordes extends JavaPlugin {
 		worlds.clear();
 		for (World world : Bukkit.getWorlds()) {
 			String name = world.getName();
-			if (getConfig().contains(name)) {
+			if (getConfig().getConfigurationSection("worlds").contains(name)) {
 				try {
 					worlds.put(name, new WorldSettings(this, name));
 				} catch (LoadingException e) {
