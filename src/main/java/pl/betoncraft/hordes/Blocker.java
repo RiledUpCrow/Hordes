@@ -17,6 +17,8 @@
  */
 package pl.betoncraft.hordes;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -33,6 +35,8 @@ public class Blocker implements Listener {
 	
 	private Hordes plugin;
 	
+	private Random rand = new Random();
+	
 	/**
 	 * Starts the blocker.
 	 * 
@@ -47,17 +51,18 @@ public class Blocker implements Listener {
 	@EventHandler
 	public void onSpawn(CreatureSpawnEvent event) {
 		if (event.getSpawnReason() != SpawnReason.NATURAL) return;
+		LivingEntity e = event.getEntity();
 		WorldSettings set = plugin.getWorlds().get(event.getEntity().getWorld()
 				.getName());
 		if (set == null) return;
-		LivingEntity e = event.getEntity();
+		if (!set.getEntities().contains(e.getType())) return;
 		if (!set.shouldExist(e)) {
 			event.setCancelled(true);
+		} else if (rand.nextDouble() > set.getRatio(e.getType())) {
+			event.setCancelled(true);
 		} else {
-			if (set.getEntities().contains(e.getType())) {
-				e.setMaxHealth(e.getMaxHealth() * set.getMultiplier());
-				e.setHealth(e.getMaxHealth());
-			}
+			e.setMaxHealth(e.getMaxHealth() * set.getHealth(e.getType()));
+			e.setHealth(e.getMaxHealth());
 		}
 	}
 	

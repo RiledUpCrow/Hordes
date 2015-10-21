@@ -26,24 +26,42 @@ near the players.
 
 ## Configuration
 
-You can edit the plugin settings in the config.yml file. async-despawn option 
-in "global-settings" controls if the plugin should despawn mobs in an asych thread.
-Leave that set to "true" unless you have problems with other plugins. despawn-interval
+You can edit the plugin settings in the config.yml file. `async-despawn` option 
+in `global-settings` controls if the plugin should despawn mobs in an asych thread.
+Leave that set to `true` unless you have problems with other plugins. `despawn-interval`
 controls how often the mobs are despawned. Default is every 10 seconds. If you make 
 that number lower, the mobs will be removed more frequently, but it may slightly impact
-the performance. Last is version. Do not touch this setting!
+the performance. Last is `version`. Do not touch this setting!
 
-Each world in which you want to enable the plugin needs one section in the "worlds"
+Each world in which you want to enable the plugin needs one section in the `worlds`
 branch in the configuration, named as the name of the world. `height` option is responsible
 for the vertical distance from the player beyond which monsters will despawn.
 If you want to limit horizontal distance, there's an option for that in
-_spigot.yml_ config file, it's called `mob-spawn-range`. Use ctrl+f to find
-it. `mobs` is a list of types of mobs handled by this plugin taken from
+_spigot.yml_ config file, it's called `mob-spawn-range` (it's measured in whole chunks.
+Use ctrl+f to find it. Option `mobs` is a list of types of mobs handled by this plugin taken from
 [here](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html).
+You don't have to make it with CAPS LOCK, you can also use spaces instead of `_`.
 If you don't want some mob to be despawned simply remove it from this list.
-`multi` option is health multiplier. It will increase health of naturally
+`health` option is health multiplier. It will increase health of naturally
 spawned mobs that many times. It can has a floating point, but cannot be
 negative.
+
+`ratio` option controls the chance for a mob to spawn, `0` means it won't show at all
+and `1` means it will be allowed every time Minecraft tries to do so. This setting
+should be used along with the `custom` branch, which lets you control individual
+properties of each mob specified in `mobs` list. If you don't specify any mob here,
+it will simply use settings defined for the whole world (`health` and `ratio`).
+For example, if you want half of all monsters to be of type _Zombie_, you should set
+global `ratio` to `0.5` and add `zombie` to `custom` branch. There you should
+specify `ratio` for zombie to be set to `1`. It will mean that every time a _Zombie_ will
+try to spawn it will be allowed to do so, but all other mobs will have only 50% chance to
+be spawned.
+
+This will not decrease the total amount of mobs, because Minecraft will keep spawning the mobs
+until it reaches its limit. The only difference is that mobs with lower `ratio` will
+spawn slower, because some spawn events will be blocked. Generally a spawn events happens
+once a tick (20 times per second), so if 10 of them will be blocked instead of 8, mobs
+will spawn less frequently. You probably won't notice the difference though.
 
 ## Commands
 

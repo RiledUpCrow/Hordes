@@ -1,11 +1,12 @@
 global-settings:
   async-despawn: true
   despawn-interval: 10
-  version: 1
+  version: 2
 worlds:
   world:
     height: 24
-    multi: 1
+    health: 1
+    ratio: 0.8
     mobs:
     - zombie
     - creeper
@@ -14,8 +15,10 @@ worlds:
     - cave spider
     - enderman
     - endermite
-    - ocelot
     - silverfish
     - slime
     - witch
-    - wolf
+    custom:
+      zombie:
+       health: 1.5
+       ratio: 1

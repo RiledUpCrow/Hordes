@@ -18,6 +18,7 @@
 package pl.betoncraft.hordes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -33,11 +34,12 @@ import org.bukkit.entity.Tameable;
  * @author Jakub Sapalski
  */
 public class WorldSettings {
-	
+
+	private String world;
 	private double height;
 	private ArrayList<EntityType> entities = new ArrayList<>();
-	private String world;
-	private double multiplier;
+	private HashMap<EntityType, Double> health = new HashMap<>();
+	private HashMap<EntityType, Double> ratio = new HashMap<>();
 
 	/**
 	 * Loads the settings for a world.
@@ -52,12 +54,20 @@ public class WorldSettings {
 	public WorldSettings(Hordes plugin, String world) throws LoadingException {
 		this.world = world;
 		height = plugin.getConfig().getDouble("worlds." + world + ".height", 24);
-		multiplier = plugin.getConfig().getDouble("worlds." + world + ".multi", 1);
+		double globalHealth = plugin.getConfig().getDouble(
+				"worlds." + world + ".health", 1); 
+		double globalRatio = plugin.getConfig().getDouble(
+				"worlds." + world + ".ratio", 1);
 		for (String entity : plugin.getConfig()
 				.getStringList("worlds." + world + ".mobs")) {
 			try {
-				entities.add(EntityType.valueOf(
-						entity.toUpperCase().replace(' ', '_')));
+				EntityType e = EntityType.valueOf(entity.toUpperCase()
+						.replace(' ', '_'));
+				entities.add(e);
+				ratio.put(e, plugin.getConfig().getDouble("worlds." + world +
+						".custom." + entity + ".ratio", globalRatio));
+				health.put(e, plugin.getConfig().getDouble("worlds." + world +
+						".custom." + entity + ".health", globalHealth));
 			} catch (IllegalArgumentException e) {
 				plugin.getLogger().warning("Unknown mob type: " + entity);
 			}
@@ -115,10 +125,19 @@ public class WorldSettings {
 	}
 
 	/**
+	 * @param entityType 
 	 * @return the health multiplier
 	 */
-	public double getMultiplier() {
-		return multiplier;
+	public double getHealth(EntityType entityType) {
+		return health.get(entityType);
+	}
+	
+	/**
+	 * @param entityType
+	 * @return the chance to spawn
+	 */
+	public double getRatio(EntityType entityType) {
+		return ratio.get(entityType);
 	}
 
 }

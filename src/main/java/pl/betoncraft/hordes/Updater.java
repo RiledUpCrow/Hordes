@@ -18,6 +18,7 @@
 package pl.betoncraft.hordes;
 
 import java.io.File;
+import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -28,7 +29,7 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class Updater {
 	
-	public final int VERSION = 1;
+	public final int VERSION = 2;
 
 	/**
 	 * Updates the configuration to newest version.
@@ -39,8 +40,8 @@ public class Updater {
 	public Updater(Hordes plugin) {
 		File configFile = new File(plugin.getDataFolder(), "config.yml");
 		if (!configFile.exists()) return; // first installation
-		int current = plugin.getConfig().getInt("global-settings.version", 0);
 		FileConfiguration config = plugin.getConfig();
+		int current = config.getInt("global-settings.version", 0);
 		while (current < VERSION) {
 			switch (current) {
 			case 0:
@@ -60,6 +61,29 @@ public class Updater {
 				plugin.getLogger().info("Added global settings to the "
 						+ "configuration");
 				current = 1;
+				break;
+			case 1:
+				for (String world : config.getConfigurationSection("worlds")
+						.getKeys(false)) {
+					double health = config.getDouble("worlds." + world
+							+ ".multi", 1);
+					config.set("worlds." + world + ".multi", null);
+					config.set("worlds." + world + ".health", health);
+					config.set("worlds." + world + ".ratio", 1);
+					List<String> mobs = config.getStringList("worlds." + world
+							+ ".mobs");
+					if (mobs.size() > 0) {
+						config.set("worlds." + world + ".custom." + mobs.get(0)
+								+ ".health", config.getDouble("worlds." + world
+								+ ".health"));
+						config.set("worlds." + world + ".custom." + mobs.get(0)
+								+ ".ratio", config.getDouble("worlds." + world
+								+ ".ratio"));
+					}
+				}
+				plugin.getLogger().info("Added amount ratio for mobs");
+				config.set("global-settings.version", 2);
+				current = 2;
 				break;
 			default:
 				plugin.getLogger().info("Invalid configuration version!");
