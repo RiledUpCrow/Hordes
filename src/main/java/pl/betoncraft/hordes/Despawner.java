@@ -17,6 +17,8 @@
  */
 package pl.betoncraft.hordes;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -54,7 +56,8 @@ public class Despawner extends BukkitRunnable {
 		for (World world : Bukkit.getWorlds()) {
 			WorldSettings settings = plugin.getWorlds().get(world.getName());
 			if (settings == null) continue;
-			for (Entity entity : world.getEntities()) {
+			// copy the array so it does not get modified while iterating
+			for (Entity entity : new ArrayList<>(world.getEntities())) {
 				if (!settings.shouldExist(entity)){
 					entity.remove();
 				}

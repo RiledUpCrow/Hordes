@@ -40,6 +40,7 @@ public class WorldSettings {
 	private ArrayList<EntityType> entities = new ArrayList<>();
 	private HashMap<EntityType, Double> health = new HashMap<>();
 	private HashMap<EntityType, Double> ratio = new HashMap<>();
+	private boolean ignoreNamedMobs;
 
 	/**
 	 * Loads the settings for a world.
@@ -54,6 +55,7 @@ public class WorldSettings {
 	public WorldSettings(Hordes plugin, String world) throws LoadingException {
 		this.world = world;
 		height = plugin.getConfig().getDouble("worlds." + world + ".height", 24);
+		ignoreNamedMobs = plugin.getConfig().getBoolean("global-settings.ignore-named-mobs", true);
 		double globalHealth = plugin.getConfig().getDouble(
 				"worlds." + world + ".health", 1); 
 		double globalRatio = plugin.getConfig().getDouble(
@@ -84,7 +86,7 @@ public class WorldSettings {
 	 * @return true if the entity should not be removed, false if it should be
 	 */
 	public boolean shouldExist(Entity entity) {
-		if (entity.getCustomName() != null) return true;
+		if (ignoreNamedMobs && entity.getCustomName() != null) return true;
 		if (!entities.contains(entity.getType())) return true;
 		if (entity instanceof Tameable) {
 			Tameable t = (Tameable) entity;

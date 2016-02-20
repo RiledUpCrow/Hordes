@@ -49,6 +49,7 @@ public class Hordes extends JavaPlugin {
 	 * and despawner.
 	 */
 	public void load() {
+		reloadConfig();
 		if (blocker != null) HandlerList.unregisterAll(blocker);
 		if (despawner != null) despawner.cancel();
 		worlds.clear();
