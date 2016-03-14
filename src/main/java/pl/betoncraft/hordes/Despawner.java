@@ -57,7 +57,8 @@ public class Despawner extends BukkitRunnable {
 			WorldSettings settings = plugin.getWorlds().get(world.getName());
 			if (settings == null) continue;
 			// copy the array so it does not get modified while iterating
-			for (Entity entity : new ArrayList<>(world.getEntities())) {
+			ArrayList<Entity> entities = new ArrayList<>(world.getEntities());
+			for (Entity entity : entities) {
 				if (!settings.shouldExist(entity)){
 					entity.remove();
 				}
