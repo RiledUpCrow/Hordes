@@ -29,7 +29,7 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class Updater {
 	
-	public final int VERSION = 3;
+	public final int VERSION = 4;
 
 	/**
 	 * Updates the configuration to newest version.
@@ -90,6 +90,12 @@ public class Updater {
 				plugin.getLogger().info("Added option to disable handling of named mobs");
 				config.set("global-settings.version", 3);
 				current = 3;
+				break;
+			case 3:
+				config.set("global-settings.ignore-named-mobs", null);
+				plugin.getLogger().info("Removed option to disable handling of named mobs, it's no longer used");
+				config.set("global-settings.version", 4);
+				current = 4;
 				break;
 			default:
 				plugin.getLogger().info("Invalid configuration version!");

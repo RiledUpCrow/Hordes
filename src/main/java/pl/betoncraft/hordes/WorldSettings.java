@@ -25,8 +25,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Tameable;
 
 /**
  * Contains all settings for the world.
@@ -40,7 +40,6 @@ public class WorldSettings {
 	private ArrayList<EntityType> entities = new ArrayList<>();
 	private HashMap<EntityType, Double> health = new HashMap<>();
 	private HashMap<EntityType, Double> ratio = new HashMap<>();
-	private boolean ignoreNamedMobs;
 
 	/**
 	 * Loads the settings for a world.
@@ -55,7 +54,6 @@ public class WorldSettings {
 	public WorldSettings(Hordes plugin, String world) throws LoadingException {
 		this.world = world;
 		height = plugin.getConfig().getDouble("worlds." + world + ".height", 24);
-		ignoreNamedMobs = plugin.getConfig().getBoolean("global-settings.ignore-named-mobs", true);
 		double globalHealth = plugin.getConfig().getDouble(
 				"worlds." + world + ".health", 1); 
 		double globalRatio = plugin.getConfig().getDouble(
@@ -86,12 +84,10 @@ public class WorldSettings {
 	 * @return true if the entity should not be removed, false if it should be
 	 */
 	public boolean shouldExist(Entity entity) {
-		if (ignoreNamedMobs && entity.getCustomName() != null) return true;
+		if (!(entity instanceof LivingEntity)) return true;
+		LivingEntity le = (LivingEntity) entity;
+		if (!le.getRemoveWhenFarAway()) return true;
 		if (!entities.contains(entity.getType())) return true;
-		if (entity instanceof Tameable) {
-			Tameable t = (Tameable) entity;
-			if (t.isTamed()) return true;
-		}
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (player.getGameMode() == GameMode.CREATIVE ||
 					player.getGameMode() == GameMode.SPECTATOR) continue; 

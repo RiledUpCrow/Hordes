@@ -1,8 +1,7 @@
 global-settings:
   async-despawn: true
   despawn-interval: 10
-  ignore-named-mobs: true
-  version: 2
+  version: 4
 worlds:
   world:
     height: 24
