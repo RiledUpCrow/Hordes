@@ -76,7 +76,7 @@ You need _hordes.reload_ command to use it, which is default for ops.
 
 Hordes is licensed under GPLv3, which means it's a free software (as in "free
 speech", not "free beer"). It's distributed from
-[SpigotMC.org](https://www.spigotmc.org/resources/hordes.12879/) for 2€.
+[SpigotMC.org](https://www.spigotmc.org/resources/hordes.12879/) for 3€.
 The source code can be found on [GitHub](https://github.com/Co0sh/Hordes). To
 compile it you need JDK 1.7 and Maven 3 installed on your system. Issue
 `mvn install` command inside the root directory. The JAR file should appear
