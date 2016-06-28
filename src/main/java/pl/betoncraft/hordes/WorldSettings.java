@@ -54,20 +54,14 @@ public class WorldSettings {
 	public WorldSettings(Hordes plugin, String world) throws LoadingException {
 		this.world = world;
 		height = plugin.getConfig().getDouble("worlds." + world + ".height", 24);
-		double globalHealth = plugin.getConfig().getDouble(
-				"worlds." + world + ".health", 1); 
-		double globalRatio = plugin.getConfig().getDouble(
-				"worlds." + world + ".ratio", 1);
-		for (String entity : plugin.getConfig()
-				.getStringList("worlds." + world + ".mobs")) {
+		double globalHealth = plugin.getConfig().getDouble("worlds." + world + ".health", 1); 
+		double globalRatio = plugin.getConfig().getDouble("worlds." + world + ".ratio", 1);
+		for (String entity : plugin.getConfig().getStringList("worlds." + world + ".mobs")) {
 			try {
-				EntityType e = EntityType.valueOf(entity.toUpperCase()
-						.replace(' ', '_'));
+				EntityType e = EntityType.valueOf(entity.toUpperCase().replace(' ', '_'));
 				entities.add(e);
-				ratio.put(e, plugin.getConfig().getDouble("worlds." + world +
-						".custom." + entity + ".ratio", globalRatio));
-				health.put(e, plugin.getConfig().getDouble("worlds." + world +
-						".custom." + entity + ".health", globalHealth));
+				ratio.put(e, plugin.getConfig().getDouble("worlds." + world + ".custom." + entity + ".ratio", globalRatio));
+				health.put(e, plugin.getConfig().getDouble("worlds." + world + ".custom." + entity + ".health", globalHealth));
 			} catch (IllegalArgumentException e) {
 				plugin.getLogger().warning("Unknown mob type: " + entity);
 			}
@@ -89,8 +83,7 @@ public class WorldSettings {
 		if (!le.getRemoveWhenFarAway()) return true;
 		if (!entities.contains(entity.getType())) return true;
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (player.getGameMode() == GameMode.CREATIVE ||
-					player.getGameMode() == GameMode.SPECTATOR) continue; 
+			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) continue; 
 			if (!player.getWorld().getName().equals(world)) continue;
 			double vDist = verticalDist(player.getLocation(), entity.getLocation());
 			if (vDist <= height) {

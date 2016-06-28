@@ -20,11 +20,12 @@ package pl.betoncraft.hordes;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 /**
  * Blocks the mobs from spawning in unwanted places.
@@ -50,18 +51,21 @@ public class Blocker implements Listener {
 	
 	@EventHandler
 	public void onSpawn(CreatureSpawnEvent event) {
-		if (event.getSpawnReason() != SpawnReason.NATURAL) return;
 		LivingEntity e = event.getEntity();
-		WorldSettings set = plugin.getWorlds().get(event.getEntity().getWorld()
-				.getName());
-		if (set == null) return;
-		if (!set.getEntities().contains(e.getType())) return;
+		WorldSettings set = plugin.getWorlds().get(event.getEntity().getWorld().getName());
+		if (set == null) {
+			return;
+		}
+		if (!set.getEntities().contains(e.getType())) {
+			return;
+		}
 		if (!set.shouldExist(e)) {
 			event.setCancelled(true);
 		} else if (rand.nextDouble() > set.getRatio(e.getType())) {
 			event.setCancelled(true);
 		} else {
-			e.setMaxHealth(e.getMaxHealth() * set.getHealth(e.getType()));
+			AttributeInstance maxHealth = e.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+			maxHealth.setBaseValue(maxHealth.getBaseValue() * set.getHealth(e.getType()));
 			e.setHealth(e.getMaxHealth());
 		}
 	}
