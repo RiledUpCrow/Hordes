@@ -29,7 +29,7 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class Updater {
 	
-	public final int VERSION = 4;
+	public final int VERSION = 5;
 
 	/**
 	 * Updates the configuration to newest version.
@@ -42,6 +42,7 @@ public class Updater {
 		if (!configFile.exists()) return; // first installation
 		FileConfiguration config = plugin.getConfig();
 		int current = config.getInt("global-settings.version", 0);
+		loop:
 		while (current < VERSION) {
 			switch (current) {
 			case 0:
@@ -97,9 +98,15 @@ public class Updater {
 				config.set("global-settings.version", 4);
 				current = 4;
 				break;
+			case 4:
+				config.set("global-settings.async-despawn", null);
+				plugin.getLogger().info("Removed async despawning - it's not effective");
+				config.set("global-settings.version", 5);
+				current = 5;
+				break;
 			default:
 				plugin.getLogger().info("Invalid configuration version!");
-				break;
+				break loop;
 			}
 		}
 		plugin.saveConfig();

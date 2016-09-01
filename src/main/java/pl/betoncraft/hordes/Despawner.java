@@ -43,12 +43,7 @@ public class Despawner extends BukkitRunnable {
 		this.plugin = plugin;
 		int interval = plugin.getConfig().getInt(
 				"global-settings.despawn-interval", 10);
-		if (plugin.getConfig().getBoolean(
-				"global-settings.async-despawn", true)) {
-			runTaskTimerAsynchronously(plugin, interval*20, interval*20);
-		} else {
-			runTaskTimer(plugin, interval*20, interval*20);
-		}
+		runTaskTimer(plugin, interval*20, interval*20);
 	}
 
 	@Override

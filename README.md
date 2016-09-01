@@ -26,16 +26,10 @@ near the players.
 
 ## Configuration
 
-You can edit the plugin settings in the config.yml file. `async-despawn` option 
-in `global-settings` controls if the plugin should despawn mobs in an asych thread.
-Leave that set to `true` unless you have problems with other plugins. `despawn-interval`
-controls how often the mobs are despawned. Default is every 10 seconds. If you make 
-that number lower, the mobs will be removed more frequently, but it may slightly impact
-the performance. `ignore-named-mobs` option is responsible for handling named mobs.
-If you want the plugin to ignore them (so it doesn't remove named mobs even if they are far
-away from the player), set it to `true`. If you're using some RPG plugins that use mob names
-to display their level, health etc, set it to `false`. Last option is `version`.
-Do not touch this setting!
+You can edit the plugin settings in the config.yml file. `despawn-interval` in
+`global-settings` controls how often the mobs are despawned. Default is every 10
+seconds. If you make that number lower, the mobs will be removed more frequently, but
+it may slightly impact the performance. Do not touch `version` setting!
 
 Each world in which you want to enable the plugin needs one section in the `worlds`
 branch in the configuration, named as the name of the world. `height` option is responsible
