@@ -101,6 +101,8 @@ public class Updater {
 			case 4:
 				config.set("global-settings.async-despawn", null);
 				plugin.getLogger().info("Removed async despawning - it's not effective");
+				config.set("global-settings.inactive-around-spawn-radius", 0);
+				plugin.getLogger().info("Added inactive-around-spawn-radius option to configuration");
 				config.set("global-settings.version", 5);
 				current = 5;
 				break;

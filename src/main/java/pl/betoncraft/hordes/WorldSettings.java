@@ -37,6 +37,7 @@ public class WorldSettings {
 
 	private String world;
 	private double height;
+	private double spawnRadius;
 	private ArrayList<EntityType> entities = new ArrayList<>();
 	private HashMap<EntityType, Double> health = new HashMap<>();
 	private HashMap<EntityType, Double> ratio = new HashMap<>();
@@ -54,6 +55,7 @@ public class WorldSettings {
 	public WorldSettings(Hordes plugin, String world) throws LoadingException {
 		this.world = world;
 		height = plugin.getConfig().getDouble("worlds." + world + ".height", 24);
+		spawnRadius = plugin.getConfig().getDouble("global-settings.inactive-around-spawn-radius", 0);
 		double globalHealth = plugin.getConfig().getDouble("worlds." + world + ".health", 1); 
 		double globalRatio = plugin.getConfig().getDouble("worlds." + world + ".ratio", 1);
 		for (String entity : plugin.getConfig().getStringList("worlds." + world + ".mobs")) {
@@ -82,6 +84,9 @@ public class WorldSettings {
 		LivingEntity le = (LivingEntity) entity;
 		if (!le.getRemoveWhenFarAway()) return true;
 		if (!entities.contains(entity.getType())) return true;
+		if (horizontalDistSquared(entity.getLocation(), entity.getWorld().getSpawnLocation()) < spawnRadius * spawnRadius) {
+			return true;
+		}
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) continue; 
 			if (!player.getWorld().getName().equals(world)) continue;
@@ -108,6 +113,21 @@ public class WorldSettings {
 	}
 	
 	/**
+	 * Calculates horizontal squared distance between the two locations.
+	 * 
+	 * @param loc1
+	 *            first location
+	 * @param loc2
+	 *            second location
+	 * @return vertical distance
+	 */
+	private double horizontalDistSquared(Location loc1, Location loc2) {
+		double xDist = loc1.getX() - loc2.getX();
+		double zDist = loc1.getZ() - loc2.getZ();
+		return (xDist * xDist) + (zDist * zDist);
+	}
+	
+	/**
 	 * @return the list of EntityTypes which should be handled by the plugin on
 	 *         this world
 	 */
@@ -119,7 +139,7 @@ public class WorldSettings {
 	 * @param entityType 
 	 * @return the health multiplier
 	 */
-	public double getHealth(EntityType entityType) {
+	public Double getHealth(EntityType entityType) {
 		return health.get(entityType);
 	}
 	
@@ -127,7 +147,7 @@ public class WorldSettings {
 	 * @param entityType
 	 * @return the chance to spawn
 	 */
-	public double getRatio(EntityType entityType) {
+	public Double getRatio(EntityType entityType) {
 		return ratio.get(entityType);
 	}
 

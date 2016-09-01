@@ -1,5 +1,6 @@
 global-settings:
   despawn-interval: 10
+  inactive-around-spawn-radius: 10
   version: 5
 worlds:
   world:
@@ -19,5 +20,5 @@ worlds:
     - witch
     custom:
       zombie:
-       health: 1.5
-       ratio: 1
+        health: 1.5
+        ratio: 1
