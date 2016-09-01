@@ -1,6 +1,6 @@
 /**
  * Bukkit plugin which moves the mobs closer to the players.
- * Copyright (C) 2015 Jakub "Co0sh" Sapalski
+ * Copyright (C) 2016 Jakub "Co0sh" Sapalski
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
