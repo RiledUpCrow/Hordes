@@ -66,6 +66,8 @@ public class Hordes extends JavaPlugin {
 		}
 		blocker = new Blocker(this);
 		despawner = new Despawner(this);
+
+		MMHook.setInstance(Bukkit.getServer().getPluginManager().getPlugin("MythicMobs"));
 	}
 	
 	/**
