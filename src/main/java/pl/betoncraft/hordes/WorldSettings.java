@@ -82,6 +82,7 @@ public class WorldSettings {
 	public boolean shouldExist(Entity entity) {
 		if (!(entity instanceof LivingEntity)) return true;
 		LivingEntity le = (LivingEntity) entity;
+		if (MMHook.isMythicMob(le)) return true; // do not mess with mythic mobs
 		if (!le.getRemoveWhenFarAway()) return true;
 		if (!entities.contains(entity.getType())) return true;
 		if (horizontalDistSquared(entity.getLocation(), entity.getWorld().getSpawnLocation()) < spawnRadius * spawnRadius) {

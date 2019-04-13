@@ -3,6 +3,7 @@ main: pl.betoncraft.hordes.Hordes
 description: Increases amount of mobs near players while decreasing overall number of mobs.
 authors: [Co0sh]
 version: 1.5
+softdepend: [MythicMobs]
 commands:
   hordesreload:
     description: Reloads the configuration

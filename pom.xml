@@ -51,5 +51,12 @@
 			<version>1.9.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.elseland.xikage.MythicMobs</groupId>
+			<artifactId>mythicmobs</artifactId>
+            <version>4.5.7</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/MythicMobs-4.5.7.jar</systemPath>
+		</dependency>
 	</dependencies>
 </project>
